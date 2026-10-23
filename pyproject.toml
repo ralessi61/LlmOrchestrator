@@ -1,0 +1,28 @@
+[project]
+name = "llm-coordinator"
+version = "0.1.0"
+description = "Concurrent LLM requests coordinator with rate limiting and retry"
+authors = [
+    {name = "ralessi61",email = "ralessi61@gmail.com"}
+]
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "pydantic (>=2.14.1,<3.0.0)"
+]
+
+[project.scripts]
+llm-coordinator = "llm_coordinator.cli:main"
+
+[tool.poetry]
+packages = [{include = "llm_coordinator", from = "src"}]
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+# Dipendenze di dev separate dal runtime (installate solo in ambiente dev, escluse dal build finale)
+[dependency-groups]
+dev = [
+    "coverage (>=7.17.0,<8.0.0)"
+]
