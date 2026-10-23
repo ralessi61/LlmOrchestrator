@@ -29,14 +29,14 @@ class TestModels(unittest.TestCase):
     def test_extraction_requires_target_fields(self):
         """ Test that a empty target_fields raises a ValidationError """
         with self.assertRaises(ValidationError):
-            request = LLMRequest(task_type=TaskType.EXTRACTION , target_fields=[], prompt="Estrarre i seguenti campi: <campi>", doc_id="DOC_ID_1")
+            request = LLMRequest(task_type=TaskType.EXTRACTION , target_fields=[], prompt="Estrarre i seguenti campi: <campi>", doc_id="DOC_ID_1", provider="fast")
 
 
     def test_task_result_validation(self):
         """ Test output model TaskResult is incoherent if success is False and error_message is None """
         with self.assertRaises(ValidationError):
-            result = TaskResult(task_type=TaskType.SUMMARY,  success=False, error_message=None, doc_id="DOC_ID_1")
-        # incoherent, if failed we must have an error message
+            result = TaskResult(task_type=TaskType.SUMMARY,  success=False, error_message=None, doc_id="DOC_ID_1",provider="fast")
+        # incoherent, if failed we must have an error message; provider placed because it is required field
 
         result = TaskResult(task_type=TaskType.SUMMARY,  success=True, error_message=None, output="testo riassunto", estimated_tokens=42, doc_id="DOC_ID_1")
         self.assertEqual(result.task_type, TaskType.SUMMARY)
